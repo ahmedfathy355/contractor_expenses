@@ -88,7 +88,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     child: MaterialButton(
                       minWidth: MediaQuery.of(context).size.width/5,
                       onPressed: () {
-                        _controller.forward().then((value) => _controller.reverse());
                         setState(() {
                           CurrentScreen = DashBoard();
                           _currentTab = 0;
@@ -109,7 +108,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     child: MaterialButton(
                       minWidth: MediaQuery.of(context).size.width/5,
                       onPressed: () {
-                        _controller.forward().then((value) => _controller.reverse());
                         setState(() {
                           CurrentScreen = Expenses();
                           _currentTab = 1;
