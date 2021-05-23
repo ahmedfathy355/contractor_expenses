@@ -16,13 +16,23 @@ dependencies:
   flutter_svg: ^0.22.0
   google_fonts_arabic: ^1.1.7
   http: ^0.13.3
+  math_expressions: ^2.0.0
+  flutter_local_notifications: ^5.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_calculator:
+    git:
+      url: git://github.com/flytreeleft/flutter_calculator.git
+      # Use the developing version
+      ref: master
+      # or use the release version
+      #ref: v0.1.0
+  flutter_localizations:
+    sdk: flutter
 
 flutter:
-
   uses-material-design: true
 
   assets:

@@ -4,10 +4,17 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts_arabic/fonts.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 import 'Pages/DashBoard.dart';
 import 'Pages/Expenses.dart';
 import 'Pages/Wallet.dart';
+import 'Widgets/AddExpenses.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+final FlutterLocalNotificationsPlugin notificationsPlugin =
+FlutterLocalNotificationsPlugin();
 
 class Home extends StatefulWidget {
   const Home({Key key}) : super(key: key);
@@ -22,6 +29,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    initializeSetting();
+    tz.initializeTimeZones();
     _controller = AnimationController(vsync: this,
       duration: Duration(milliseconds: 200),
       lowerBound: 1,
@@ -48,27 +57,21 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        leading: leadingWidget(),
-        leadingWidth: 160,
-        actions: [
-
-        ],
-      ),
-
       body: PageStorage(
         bucket: bucket,
         child: CurrentScreen,
       ),
-
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          _controller.forward().then((value) => _controller.reverse());
-        },
+      floatingActionButton: ScaleTransition(
+        scale: _controller,
+        child: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            _controller.forward().then((value) => _controller.reverse());
+            Navigator.push(context, MaterialPageRoute(builder: (context) => AddExpenses() ));
+            displayNotification('New Expenses Added', DateTime.parse('2021-05-19 00:29:00.090427+0500'));
+          },
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -83,45 +86,39 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  ScaleTransition(
-                    scale: _controller,
-                    child: MaterialButton(
-                      minWidth: MediaQuery.of(context).size.width/5,
-                      onPressed: () {
-                        setState(() {
-                          CurrentScreen = DashBoard();
-                          _currentTab = 0;
-                        });
-                      },child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.home,color: _currentTab == 0 ?  Color(0xFF2EBF70) : Colors.grey,size: 28,),
-                        Text('الرئيسية' ,style: TextStyle(fontFamily: 'NeoSans',fontSize: 12,
-                            color: _currentTab == 0 ?  Color(0xFF2EBF70) : Colors.grey
-                        ),)
-                      ],
-                    ),
-                    ),
+                  MaterialButton(
+                    minWidth: MediaQuery.of(context).size.width/5,
+                    onPressed: () {
+                      setState(() {
+                        CurrentScreen = DashBoard();
+                        _currentTab = 0;
+                      });
+                    },child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.home,color: _currentTab == 0 ?  Color(0xFF2EBF70) : Colors.grey,size: 28,),
+                      Text('الرئيسية' ,style: TextStyle(fontFamily: 'NeoSans',fontSize: 12,
+                          color: _currentTab == 0 ?  Color(0xFF2EBF70) : Colors.grey
+                      ),)
+                    ],
                   ),
-                  ScaleTransition(
-                    scale: _controller,
-                    child: MaterialButton(
-                      minWidth: MediaQuery.of(context).size.width/5,
-                      onPressed: () {
-                        setState(() {
-                          CurrentScreen = Expenses();
-                          _currentTab = 1;
-                        });
-                      },child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.payments,color: _currentTab == 1 ?  Color(0xFF2EBF70) : Colors.grey,size: 28,),
-                        Text('المصروفات' ,style: TextStyle(fontFamily: 'NeoSans',fontSize: 12,
-                            color: _currentTab == 1 ?  Color(0xFF2EBF70) : Colors.grey
-                        ),)
-                      ],
-                    ),
-                    ),
+                  ),
+                  MaterialButton(
+                    minWidth: MediaQuery.of(context).size.width/5,
+                    onPressed: () {
+                      setState(() {
+                        CurrentScreen = Expenses();
+                        _currentTab = 1;
+                      });
+                    },child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.payments,color: _currentTab == 1 ?  Color(0xFF2EBF70) : Colors.grey,size: 28,),
+                      Text('المصروفات' ,style: TextStyle(fontFamily: 'NeoSans',fontSize: 12,
+                          color: _currentTab == 1 ?  Color(0xFF2EBF70) : Colors.grey
+                      ),)
+                    ],
+                  ),
                   )
                 ],
               ),
@@ -135,7 +132,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       setState(() {
                         CurrentScreen = Wallet();
                         _currentTab = 2;
-                        _controller.forward().then((value) => _controller.reverse());
                       });
                     },child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -153,7 +149,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       setState(() {
                         CurrentScreen = Settings();
                         _currentTab = 3;
-                        _controller.forward().then((value) => _controller.reverse());
                       });
                     },child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -177,20 +172,33 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
+Future<void> displayNotification(String match, DateTime dateTime) async {
 
-  Widget leadingWidget(){
-    return Row(
-      children: [
-        IconButton(icon: Icon(Icons.filter_list,color: Colors.white,size: 28,) ,onPressed: () {  }, ),
-        SizedBox(width: 5,),
-        IconButton(icon: Icon(Icons.save,color: Colors.white,size: 28,) ,onPressed: () {  }, ),
-        // SizedBox(width: 5,),
-        // IconButton(icon: Icon(Icons.settings,color: Colors.white,size: 28,) ,onPressed: () {  }, ),
-        //
-      ],
-    );
-  }
+  notificationsPlugin.show(
+      0,
+      match,
+      'Review Today Records',
+      NotificationDetails(
+        android: AndroidNotificationDetails('channel id', 'channel name', 'channel description'),
+        iOS:  IOSNotificationDetails(
+            presentAlert: false,  // Present an alert when the notification is displayed and the application is in the foreground (only from iOS 10 onwards)
+            presentBadge: false,  // Present the badge number when the notification is displayed and the application is in the foreground (only from iOS 10 onwards)
+            presentSound: false,  // Play a sound when the notification is displayed and the application is in the foreground (only from iOS 10 onwards)
+            sound: '',  // Specifics the file path to play (only from iOS 10 onwards)
+            badgeNumber: 1, // The application's icon badge number
 
+            subtitle: 'مصاريف المقاولات', //Secondary description  (only from iOS 10 onwards)
+            //threadIdentifier: String? (only from iOS 10 onwards)
+        ),
+      ),
+      payload: 'item x');
+}
+}
+
+void initializeSetting() async {
+  var initializeAndroid = AndroidInitializationSettings('logo');
+  var initializeSetting = InitializationSettings(android: initializeAndroid);
+  await notificationsPlugin.initialize(initializeSetting);
 }
 
 
