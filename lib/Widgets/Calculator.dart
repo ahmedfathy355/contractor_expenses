@@ -2,6 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:math_expressions/math_expressions.dart';
 
+
+
+
+
+
+/////////not used
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void main() => runApp(MyApp()); // App Entry Point
 
 class MyApp extends StatelessWidget {
@@ -140,8 +166,8 @@ class CalculatorState extends State<Calculator> {
                       text,
                       style: TextStyle(
                         color: Color.fromRGBO(94, 94, 94, 1),
-                        fontSize: 30.0,
-                        fontWeight: FontWeight.w300,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w100,
                       ),
                     ),
                   ),
@@ -174,7 +200,7 @@ class CalculatorState extends State<Calculator> {
               text,
               style: TextStyle(
                 color: Color.fromRGBO(255, 211, 215, 1),
-                fontSize: 30.0,
+                fontSize: 18.0,
                 fontWeight: FontWeight.w300,
               ),
             ),
@@ -215,7 +241,7 @@ class CalculatorState extends State<Calculator> {
                       children: <Widget>[
                         Text(equation,
                             style: TextStyle(
-                                fontSize: 30,
+                                fontSize: 18,
                                 color: Color.fromRGBO(227, 227, 227, 1),
                                 fontWeight: FontWeight.bold)),
                       ],
@@ -238,7 +264,7 @@ class CalculatorState extends State<Calculator> {
                             child: Text(
                               "×",
                               style: TextStyle(
-                                  fontSize: 36,
+                                  fontSize: 22,
                                   color: Color.fromRGBO(200, 200, 200, 1),
                                   fontWeight: FontWeight.w300),
                             ),
@@ -262,7 +288,7 @@ class CalculatorState extends State<Calculator> {
                   result,
                   style: TextStyle(
                       color: Color.fromRGBO(152, 152, 152, 1),
-                      fontSize: 70,
+                      fontSize: 30,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Chivo'),
                 ),

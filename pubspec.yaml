@@ -16,8 +16,15 @@ dependencies:
   flutter_svg: ^0.22.0
   google_fonts_arabic: ^1.1.7
   http: ^0.13.3
+  intl: ^0.17.0
+  rxdart: ^0.27.0
   math_expressions: ^2.0.0
+  connectivity: ^3.0.3
   flutter_local_notifications: ^5.0.0
+  date_time_picker: "^2.0.0"
+  path_provider: ^2.0.1
+  shared_preferences: ^2.0.6
+  sqflite: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:
@@ -37,6 +44,7 @@ flutter:
 
   assets:
     - assets/svg/menu.svg
+    - assets/images/app_logo.PNG
 
   fonts:
     - family: Kufi
@@ -45,7 +53,10 @@ flutter:
     - family: NeoSans
       fonts:
         - asset: assets/fonts/NeoSans.ttf
+          weight: 100
     - family: DUBAI
       fonts:
         - asset: assets/fonts/DUBAI.TTF
-
+    - family: Tajawal
+      fonts:
+        - asset: assets/fonts/Tajawal.ttf

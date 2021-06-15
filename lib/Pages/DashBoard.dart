@@ -53,8 +53,8 @@ class _DashBoardState extends State<DashBoard>  {
                   indicatorSize: TabBarIndicatorSize.tab,
                   indicatorWeight: 3,
                   tabs: <Widget>[
-                    Tab(child: Text('الاحصائيات',style: TextStyle(fontFamily: 'NeoSans',color: Colors.white,),)),
-                    Tab(child: Text('التقارير',style: TextStyle(fontFamily: 'NeoSans',color: Colors.white,),)),
+                    Tab(child: Text('الاحصائيات',style: TextStyle(fontFamily: 'NeoSans',color: Colors.white,fontWeight: FontWeight.w100),)),
+                    Tab(child: Text('التقارير',style: TextStyle(fontFamily: 'NeoSans',color: Colors.white,fontWeight: FontWeight.w100),)),
                   ]
                 ),
               ),

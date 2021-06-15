@@ -1,6 +1,7 @@
 import 'package:contractor_expenses/Widgets/Calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calculator/flutter_calculator.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 
 class AddExpenses extends StatefulWidget {
   const AddExpenses({Key key}) : super(key: key);
@@ -10,9 +11,28 @@ class AddExpenses extends StatefulWidget {
 }
 
 class _AddExpensesState extends State<AddExpenses> {
-  final TextEditingController _textController = TextEditingController(text: '0.00');
+  final TextEditingController _textController = TextEditingController();
+  DateTime date = DateTime.now();
+  Future<Null> selectTimePicker(BuildContext context) async{
+    final DateTime picked = await showDatePicker(
+        context : context,
+        initialDate: date,
+        firstDate:DateTime(2000),
+        lastDate:DateTime(2030)
+    );
+    if(picked != null && picked != date){
+      setState((){
+        date = picked;
+      }
+      );
+    }
+  }
 
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   void dispose() {
     this._textController.dispose();
@@ -30,32 +50,35 @@ class _AddExpensesState extends State<AddExpenses> {
       ),
       body: Column(
         children: [
-          txt_MoneyAmount(context),
-          SizedBox(height: 10,),
-          FromAccountItem(),
+          moneyAmount(context),
+          //SizedBox(height: 10,),
+          fromAccountItem(),
           Divider(height: 1,),
-          ToAccountItem(),
-          SizedBox(height: 10,),
-          DuoDate(),
-          SizedBox(height: 10,),
-          ImageOrCamera(),
-          SizedBox(height: 100,),
-          btn_Add()
+          toAccountItem(),
+          Divider(height: 1,),
+          remarks(),
+          Divider(height: 1,),
+          duoDate(),
+          Divider(height: 1,),
+          imageOrCamera(),
+          Divider(height: 1,),
+          //makeNotify(),
+
+        //  btn_Add_Dock_bottom()
         ],
       ) ,
     );
   }
 
-
-  Widget txt_MoneyAmount(BuildContext context){
+  Widget moneyAmount(BuildContext context){
     return Container(
-      padding: EdgeInsets.all( 40),
+      padding: EdgeInsets.fromLTRB( 40,10,40,10),
       color: Colors.white,
       child: TextField(
         controller: this._textController,
         decoration: InputDecoration(
             hintText: 'المبلغ',
-            hintStyle: TextStyle(fontFamily: 'NeoSans',fontSize: 16),
+            hintStyle: TextStyle(fontFamily: 'NeoSans',fontSize: 16,fontWeight: FontWeight.w100),
             prefixIcon: IconButton(icon: Icon(Icons.calculate_sharp),iconSize: 32,
                 onPressed: () {
                   this._showCalculatorDialog(context);
@@ -69,6 +92,7 @@ class _AddExpensesState extends State<AddExpenses> {
 
     );
   }
+
   void _showCalculatorDialog(BuildContext context) async {
     final result = await showCalculator(context: this.context) ?? 0.00;
     this._textController.value = this._textController.value.copyWith(
@@ -76,28 +100,28 @@ class _AddExpensesState extends State<AddExpenses> {
     );
   }
 
-  List<String> _Items = ['العهدة'];
-  String _FromdropDownValue;
+  List<String> _items = ['العهدة'];
+  String _fromdropDownValue;
 
-  Widget FromAccountItem(){
+  Widget fromAccountItem(){
     return Container(
       color: Colors.white,
-      padding: new EdgeInsets.all(16.0),
+      padding: EdgeInsets.fromLTRB( 16,10,16,10),
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: DropdownButtonHideUnderline(
           child: DropdownButton(
             icon: Icon(Icons.remove_circle_outline  ,color: Colors.grey,),
-            hint: _FromdropDownValue == null
-                ? Text('من حساب',style: TextStyle(fontFamily: 'NeoSans',fontSize: 16),)
+            hint: _fromdropDownValue == null
+                ? Text('من حساب',style: TextStyle(fontFamily: 'NeoSans',fontSize: 16,fontWeight: FontWeight.w100),)
                 : Text(
-              _FromdropDownValue,
-              style: TextStyle(fontFamily: 'NeoSans',fontSize: 16,color: Colors.black),
+              _fromdropDownValue,
+              style: TextStyle(fontFamily: 'NeoSans',fontSize: 16,color: Colors.black,fontWeight: FontWeight.w100),
             ),
             isExpanded: true,
             iconSize: 30.0,
-            style: TextStyle(fontFamily: 'NeoSans',fontSize: 16,color: Colors.black),
-            items: _Items.map(
+            style: TextStyle(fontFamily: 'NeoSans',fontSize: 16,color: Colors.black,fontWeight: FontWeight.w100),
+            items: _items.map(
                   (val) {
                 return DropdownMenuItem<String>(
                   value: val,
@@ -108,7 +132,7 @@ class _AddExpensesState extends State<AddExpenses> {
             onChanged: (val) {
               setState(
                     () {
-                      _FromdropDownValue = val;
+                      _fromdropDownValue = val;
                 },
               );
             },
@@ -119,26 +143,26 @@ class _AddExpensesState extends State<AddExpenses> {
 
   }
 
-  List<String> _AccountItems = ['مشروع 1'];
-  String _TodropDownValue;
+  List<String> _accountItems = ['مشروع 1'];
+  String _todropDownValue;
 
-  Widget ToAccountItem(){
+  Widget toAccountItem(){
     return Container(
       color: Colors.white,
-      padding: new EdgeInsets.all(16.0),
+      padding: EdgeInsets.fromLTRB( 16,10,16,10),
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: DropdownButtonHideUnderline(
             child: DropdownButton(
-              style: TextStyle(fontFamily: 'NeoSans',fontSize: 16,color: Colors.black),
+              style: TextStyle(fontFamily: 'NeoSans',fontSize: 16,color: Colors.black,fontWeight: FontWeight.w100),
               isExpanded: true,
-              value: _TodropDownValue,
+              value: _todropDownValue,
               onChanged: (value) {
                 setState(() {
-                  _TodropDownValue = value;
+                  _todropDownValue = value;
                 });
               },
-              items: _AccountItems.map(
+              items: _accountItems.map(
                     (val) {
                   return DropdownMenuItem<String> (
                     value: val,
@@ -149,11 +173,11 @@ class _AddExpensesState extends State<AddExpenses> {
               icon: Icon(Icons.add_circle_outline  ,color: Colors.grey,),
               iconSize: 30,
 
-              hint: _TodropDownValue == null
-                  ? Text('الى حساب ',style: TextStyle(fontFamily: 'NeoSans',fontSize: 16),)
+              hint: _todropDownValue == null
+                  ? Text('الى حساب ',style: TextStyle(fontFamily: 'NeoSans',fontSize: 16,fontWeight: FontWeight.w100),)
                   : Text(
-                _TodropDownValue,
-                style: TextStyle(fontFamily: 'NeoSans',fontSize: 16,color: Colors.black),
+                _todropDownValue,
+                style: TextStyle(fontFamily: 'NeoSans',fontSize: 16,color: Colors.black,fontWeight: FontWeight.w100),
               ),
             )
         ) ,
@@ -164,23 +188,70 @@ class _AddExpensesState extends State<AddExpenses> {
     );
 
   }
-  Widget DuoDate(){
+
+  Widget remarks(){
+    return Container(
+      padding: EdgeInsets.fromLTRB( 16,0,16,0),
+      color: Colors.white,
+      child: TextFormField(
+        cursorColor: Theme.of(context).cursorColor,
+        initialValue: '',
+        maxLength: 100,
+
+        decoration: InputDecoration(
+         // icon: Icon(Icons.favorite),
+
+          labelText: 'البند',
+          labelStyle: TextStyle(
+            color: Color(0xFF69BD43),
+          ),
+          //helperText: 'Helper text',
+          suffixIcon:  Icon(
+            Icons.notes,
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Color(0xFF69BD43)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget duoDate(){
+    return Container(
+      padding: EdgeInsets.fromLTRB( 16,5,16,5),
+      color: Colors.white,
+      height: 40,
+      child: Row(
+        children: [
+          Text('data'),
+          GestureDetector(
+              child : Container(
+                  child: Text('ddd')),
+                  onTap: () {
+                  selectTimePicker(context);
+              }
+          ),
+          Text(date.toString()),
+        ],
+      ),
+    );
+  }
+
+  Widget imageOrCamera(){
     return Container(
       color: Colors.white,
       height: 20,
     );
   }
-  Widget ImageOrCamera(){
+
+  Widget btnAdd(){
     return Container(
       color: Colors.white,
       height: 20,
     );
   }
-  Widget btn_Add(){
-    return Container(
-      color: Colors.white,
-      height: 20,
-    );
-  }
+
+
 }
 

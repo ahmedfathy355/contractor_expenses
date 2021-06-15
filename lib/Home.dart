@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:contractor_expenses/Pages/Settings.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -57,6 +58,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.light,
+    ));
     return Scaffold(
       body: PageStorage(
         bucket: bucket,
@@ -96,9 +103,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     },child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.home,color: _currentTab == 0 ?  Color(0xFF2EBF70) : Colors.grey,size: 28,),
-                      Text('الرئيسية' ,style: TextStyle(fontFamily: 'NeoSans',fontSize: 12,
-                          color: _currentTab == 0 ?  Color(0xFF2EBF70) : Colors.grey
+                      Icon(Icons.home,color: _currentTab == 0 ?  Color(0xFF69BD43) : Colors.grey,size: 28,),
+                      Text('الرئيسية' ,style: TextStyle(fontFamily: 'NeoSans',fontSize: 12,fontWeight: FontWeight.w100,
+                          color: _currentTab == 0 ?  Color(0xFF69BD43) : Colors.grey
                       ),)
                     ],
                   ),
@@ -113,9 +120,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     },child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.payments,color: _currentTab == 1 ?  Color(0xFF2EBF70) : Colors.grey,size: 28,),
-                      Text('المصروفات' ,style: TextStyle(fontFamily: 'NeoSans',fontSize: 12,
-                          color: _currentTab == 1 ?  Color(0xFF2EBF70) : Colors.grey
+                      Icon(Icons.payments,color: _currentTab == 1 ?  Color(0xFF69BD43) : Colors.grey,size: 28,),
+                      Text('المصروفات' ,style: TextStyle(fontFamily: 'NeoSans',fontSize: 12,fontWeight: FontWeight.w100,
+                          color: _currentTab == 1 ?  Color(0xFF69BD43) : Colors.grey
                       ),)
                     ],
                   ),
@@ -136,9 +143,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     },child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.account_balance_wallet,color: _currentTab == 2 ?  Color(0xFF2EBF70) : Colors.grey,size: 28,),
-                      Text('المحفظة' ,style: TextStyle(fontFamily: 'NeoSans',fontSize: 12,
-                          color: _currentTab == 2 ?  Color(0xFF2EBF70) : Colors.grey
+                      Icon(Icons.account_balance_wallet,color: _currentTab == 2 ?  Color(0xFF69BD43) : Colors.grey,size: 28,),
+                      Text('المحفظة' ,style: TextStyle(fontFamily: 'NeoSans',fontSize: 12,fontWeight: FontWeight.w100,
+                          color: _currentTab == 2 ?  Color(0xFF69BD43) : Colors.grey
                       ),)
                     ],
                   ),
@@ -153,9 +160,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     },child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.list_alt,color: _currentTab == 3 ?  Color(0xFF2EBF70) : Colors.grey,size: 32,),
-                      Text('الاعدادات' ,style: TextStyle(fontFamily: 'NeoSans',fontSize: 12,
-                          color: _currentTab == 3 ?  Color(0xFF2EBF70) : Colors.grey
+                      Icon(Icons.list_alt,color: _currentTab == 3 ?  Color(0xFF69BD43) : Colors.grey,size: 32,),
+                      Text('الاعدادات' ,style: TextStyle(fontFamily: 'NeoSans',fontSize: 12,fontWeight: FontWeight.w100,
+                          color: _currentTab == 3 ?  Color(0xFF69BD43) : Colors.grey
                       ),)
                     ],
                   ),
