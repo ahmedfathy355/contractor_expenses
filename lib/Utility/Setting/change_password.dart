@@ -1,8 +1,9 @@
+import '../../Utility/Localizations/localization_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Models/user.dart';
-import '../Pages/login.dart';
+import '../../Pages/login.dart';
 import '../../Models/user.dart' as user_model;
 
 class change_password extends StatefulWidget {
@@ -372,7 +373,7 @@ class _change_password extends State<change_password> {
       var user = new User();
       user.UserID = user_model.currentUser.value.UserID;
       user.PasswordStored = txt_New_Password;
-      user.Mobile = txt_mob;
+     //user.Mobile = txt_mob;
       user_model.resetPassword(user).then((value) {
         if (value != null ) {
           Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Login()));

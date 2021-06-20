@@ -1,10 +1,14 @@
-import 'package:contractor_expenses/Widgets/AddExpenses.dart';
-import 'package:contractor_expenses/Widgets/DailyReport.dart';
-import 'package:contractor_expenses/Widgets/Statistics.dart';
+import 'package:contractor_expenses/Utility/utils.dart';
+
+import '../Widgets/AddExpenses.dart';
+import '../Widgets/DailyReport.dart';
+import '../Widgets/Statistics.dart';
 import 'package:flutter/material.dart';
+import '../Widgets/DrawerWidget.dart';
 
 class DashBoard extends StatefulWidget {
-  const DashBoard({Key key}) : super(key: key);
+  GlobalKey<ScaffoldState> parentScaffoldKey  = GlobalKey<ScaffoldState>();
+  DashBoard({Key key}) : super(key: key);
 
   @override
   _DashBoardState createState() => _DashBoardState();
@@ -12,6 +16,8 @@ class DashBoard extends StatefulWidget {
 
 class _DashBoardState extends State<DashBoard>  {
 
+
+  GlobalKey<NavigatorState> _key = GlobalKey();
   TabController _tabController;
 
   @override
@@ -42,6 +48,8 @@ class _DashBoardState extends State<DashBoard>  {
               }
             });
             return Scaffold(
+              key: widget.parentScaffoldKey,
+              drawer: DrawerWidget(),
               appBar: AppBar(
                 automaticallyImplyLeading: false,
                 leading: leadingWidget(),
@@ -62,6 +70,7 @@ class _DashBoardState extends State<DashBoard>  {
                 children:  <Widget>[
                   Statistics(),
                   DailyReport(),
+
                 ]
               ),
             );
@@ -69,16 +78,16 @@ class _DashBoardState extends State<DashBoard>  {
       ),
     );
 
-
-
-
   }
 
 
   Widget leadingWidget(){
     return Row(
       children: [
-        IconButton(icon: Icon(Icons.filter_list,color: Colors.white,size: 28,) ,onPressed: () {  }, ),
+        IconButton(icon: Icon(Icons.filter_list,color: Colors.white,size: 28,) ,
+          onPressed: () {
+             widget.parentScaffoldKey.currentState.openDrawer();
+          }, ),
         SizedBox(width: 5,),
         IconButton(icon: Icon(Icons.save,color: Colors.white,size: 28,) ,onPressed: () {  }, ),
         // SizedBox(width: 5,),

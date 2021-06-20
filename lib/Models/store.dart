@@ -62,9 +62,7 @@ Future<Stream<Store>> getStores() async {
 
   final client = new http.Client();
   final streamedRest = await client.send(http.Request('get', Uri.parse(url)));
-
   var _code = streamedRest.statusCode;
-
   return streamedRest
       .stream
       .transform(utf8.decoder)
@@ -86,3 +84,4 @@ Future<Store> getCurrentStore() async {
   currentStore.notifyListeners();
   return currentStore.value;
 }
+

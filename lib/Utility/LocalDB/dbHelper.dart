@@ -6,10 +6,10 @@ import 'package:path_provider/path_provider.dart';
 
 class DatabaseHelper {
 
-  static final _databaseName = "MyDatabase.db";
+  static final _databaseName = "ContractorDB.db";
   static final _databaseVersion = 1;
 
-  static final table = 'my_table';
+  static final table = 'img_table';
 
   static final columnId = '_id';
   static final columnName = 'name';

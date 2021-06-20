@@ -1,25 +1,35 @@
+import 'package:contractor_expenses/Pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'Home.dart';
-import '../Pages/login.dart';
+import 'route_generator.dart';
 
-void main() {
+Future<void>  main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      systemNavigationBarColor: SystemUiOverlayStyle.dark.systemNavigationBarColor,
+    ),
+  );
 
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
 
   @override
+  _MyApp createState() => _MyApp();
+}
+
+
+class _MyApp extends State<MyApp> {
+  // This widget is the root of your application.
+  @override
+  void initState() {
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
-      systemNavigationBarColor: Colors.white,
-      systemNavigationBarIconBrightness: Brightness.light,
-    ));
     return MaterialApp(
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
@@ -40,8 +50,8 @@ class MyApp extends StatelessWidget {
 
       ),
       debugShowCheckedModeBanner: false,
-      home: currentUser.value.UserID == null  ? Login() : Home() ,
-
+      initialRoute: '/Splash',
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

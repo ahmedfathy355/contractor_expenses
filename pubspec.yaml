@@ -15,16 +15,17 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_svg: ^0.22.0
   google_fonts_arabic: ^1.1.7
-  http: ^0.13.3
+  http: ^0.12.1
   intl: ^0.17.0
   rxdart: ^0.27.0
   math_expressions: ^2.0.0
-  connectivity: ^3.0.3
-  flutter_local_notifications: ^5.0.0
+  connectivity: ^3.0.6
+  flutter_local_notifications: ^3.0.0
   date_time_picker: "^2.0.0"
   path_provider: ^2.0.1
   shared_preferences: ^2.0.6
   sqflite: ^2.0.0+3
+  image_picker: ^0.6.7
 
 dev_dependencies:
   flutter_test:
@@ -44,7 +45,16 @@ flutter:
 
   assets:
     - assets/svg/menu.svg
+    - assets/svg/account.svg
+    - assets/svg/favorite.svg
+    - assets/svg/cart.svg
+    - assets/svg/explore.svg
+    - assets/svg/shop.svg
+    - assets/svg/search.svg
+    - assets/svg/visa.svg
+    - assets/svg/ubuntu.svg
     - assets/images/app_logo.PNG
+    - assets/images/wallet_32.png
 
   fonts:
     - family: Kufi
